@@ -23,8 +23,7 @@ import datasets.imagenetv2
 import datasets.imagenet_a
 import datasets.imagenet_r
 
-import trainers.coop
-import trainers.cocoop
+import trainers.advpt
 import trainers.zsclip
 
 
@@ -90,20 +89,15 @@ def extend_cfg(cfg):
     """
     from yacs.config import CfgNode as CN
 
-    cfg.TRAINER.COOP = CN()
-    cfg.TRAINER.COOP.N_CTX = 32  # number of context vectors
-    cfg.TRAINER.COOP.CSC = False  # class-specific context
-    cfg.TRAINER.COOP.CTX_INIT = ""  # initialization words
-    cfg.TRAINER.COOP.PREC = prec  # fp16, fp32, amp
-    cfg.TRAINER.COOP.CLASS_TOKEN_POSITION = "end"  # 'middle' or 'end' or 'front'
-
-    cfg.TRAINER.COCOOP = CN()
-    cfg.TRAINER.COCOOP.N_CTX = 16  # number of context vectors
-    cfg.TRAINER.COCOOP.CTX_INIT = ""  # initialization words
-    cfg.TRAINER.COCOOP.PREC = prec  # fp16, fp32, amp
+    cfg.TRAINER.ADV = CN()
+    cfg.TRAINER.ADV.N_CTX = 32  # number of context vectors
+    cfg.TRAINER.ADV.CSC = False  # class-specific context
+    cfg.TRAINER.ADV.CTX_INIT = ""  # initialization words
+    cfg.TRAINER.ADV.PREC = prec  # fp16, fp32, amp
+    cfg.TRAINER.ADV.CLASS_TOKEN_POSITION = "end"  # 'middle' or 'end' or 'front'
 
     cfg.DATASET.SUBSAMPLE_CLASSES = "all"  # all, base or new
-    cfg.DATALOADER.TRAIN_X.BATCH_EMBEDDING_SIZE = 2048
+    cfg.DATALOADER.TRAIN_X.BATCH_EMBEDDING_SIZE = 256
     cfg.DATASET.TRAIN_EPS = 8
     cfg.DATASET.TEST_EPS = 16
     # cfg.DATASET.NUM_SHOTS = 16
