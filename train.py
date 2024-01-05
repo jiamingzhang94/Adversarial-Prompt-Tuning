@@ -228,6 +228,9 @@ if __name__ == "__main__":
         nargs=argparse.REMAINDER,
         help="modify config options using the command-line",
     )
+    parser.add_argument(
+        "--seed", type=int, default=1, help="only positive value enables a fixed seed"
+    )
     args = parser.parse_args()
 
     # threading.Thread(target=log_gpu_usage).start()
