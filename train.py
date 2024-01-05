@@ -57,15 +57,6 @@ def reset_cfg(cfg, args):
     if args.seed:
         cfg.SEED = args.seed
 
-    if args.source_domains:
-        cfg.DATASET.SOURCE_DOMAINS = args.source_domains
-
-    if args.target_domains:
-        cfg.DATASET.TARGET_DOMAINS = args.target_domains
-
-    if args.transforms:
-        cfg.INPUT.TRANSFORMS = args.transforms
-
     if args.trainer:
         cfg.TRAINER.NAME = args.trainer
 
