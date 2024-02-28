@@ -39,6 +39,6 @@ python train.py \
 --root ${D} \
 --trainer ${TRAINER} \
 --dataset-config-file configs/datasets/${DATASET}.yaml \
---config-file configs/trainers/ADV/${CFG}.yaml \
+--config-file configs/trainers/AdvPT/${CFG}.yaml \
 --output-dir output/${TRAINER}/${CFG}/${DATASET} \
 --eval-only
