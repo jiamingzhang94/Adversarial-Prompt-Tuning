@@ -1,5 +1,5 @@
 
-# Adversarial Prompt Tuning for Vision-Language Models (AdvPT)
+# ECCV 2024: Adversarial Prompt Tuning for Vision-Language Models (AdvPT)
 
 Welcome to the official code repository for the paper "Adversarial Prompt Tuning for Vision-Language Models". Our work introduces AdvPT, an innovative approach that leverages learnable text prompts and aligns them with adversarial image embeddings. This method aims to address the vulnerabilities inherent in Vision-Language Models (VLMs) without the necessity of extensive parameter training or modifying the existing model architecture.
 
