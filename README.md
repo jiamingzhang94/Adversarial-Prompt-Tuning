@@ -3,28 +3,31 @@
 
 Welcome to the official code repository for the paper "Adversarial Prompt Tuning for Vision-Language Models". Our work introduces AdvPT, an innovative approach that leverages learnable text prompts and aligns them with adversarial image embeddings. This method aims to address the vulnerabilities inherent in Vision-Language Models (VLMs) without the necessity of extensive parameter training or modifying the existing model architecture.
 
-**Note:** This repository is in its preliminary version and represents our first effort in organizing the code. If you encounter any bugs or issues, please feel free to report them in the 'Issues' section of this GitHub repository. A more refined version of the code will be released following the publication of the paper.
 
-## Getting Started
+## Step 1: Environment Setup
+To configure the environment, follow the installation guide from [CoOp](https://github.com/KaiyangZhou/CoOp#how-to-install).
 
-This project is built upon the framework of CoOp (available on GitHub at [CoOp on GitHub](https://github.com/KaiyangZhou/CoOp)). To set up the required environment and download the necessary datasets, please refer to the installation guide at [CoOp Installation Guide](https://github.com/KaiyangZhou/CoOp#how-to-install).
+## Step 2: Data Preparation
+We have copied the data download script from CoOp. You can follow the steps in [DATASETS.md](https://github.com/jiamingzhang94/Adversarial-Prompt-Tuning/blob/master/DATASETS.md) to prepare the datasets.
 
-To run the project, execute the script using the following command:
-
+## Step 3: Adversarial Prompt Tuning
+For complete training and evaluation, use the script:
 ```bash
 ./scripts/main.sh
 ```
-
-We are excited to see how you will utilize AdvPT in your research and applications. Stay tuned for further updates and feel free to contribute to the development of this project!
+You can modify this script to suit your needs. It calls `train.py`, with most parameters documented in the code. If you already have a model checkpoint, use:
+```bash
+python train.py --root YOUR_DATA --trainer AdvPT --dataset-config-file configs/datasets/oxford_flowers.yaml --config-file configs/trainers/AdvPT/rn50.yaml --output-dir YOUR_OUTPUT --model-dir YOUR_WEIGHTS --eval-only
+```
 
 ## Citation
-If you find this work useful in your research, please consider citing:
-
+If you find this work useful, please cite:
 ```bibtex
-@article{zhang2023adversarial,
+@inproceedings{zhang2024adversarial, 
   title={Adversarial Prompt Tuning for Vision-Language Models},
   author={Zhang, Jiaming and Ma, Xingjun and Wang, Xin and Qiu, Lingyu and Wang, Jiaqi and Jiang, Yu-Gang and Sang, Jitao},
-  journal={arXiv preprint arXiv:2311.11261},
-  year={2023}
+  booktitle={European Conference on Computer Vision},
+  year={2024}
 }
 ```
+
