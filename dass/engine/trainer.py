@@ -252,14 +252,14 @@ class TrainerBase:
         else:
             self._writer.add_scalar(tag, scalar_value, global_step)
 
-    def train(self, start_epoch, max_epoch, adv_training=False):
+    def train(self, start_epoch, max_epoch, path=None, adv_training=False):
         """Generic training loops."""
         self.start_epoch = start_epoch
         self.max_epoch = max_epoch
 
         # self.before_train()
         if adv_training:
-            self.before_adv_train()
+            self.before_adv_train(path=path)
         for self.epoch in range(self.start_epoch, self.max_epoch):
             self.before_epoch()
             if adv_training:
@@ -454,9 +454,8 @@ class SimpleTrainer(TrainerBase):
         # Remember the starting time (for computing the elapsed time)
         self.time_start = time.time()
 
-    def before_adv_train(self, attack='PGD'):
-        pkl_path = '/share/test/user/share1/train/{}_{}.pkl'.format(self.cfg.DATASET.NAME,
-                                                                     self.cfg.MODEL.BACKBONE.NAME.replace(
+    def before_adv_train(self, path, attack='PGD'):
+        pkl_path = '{}/{}_{}.pkl'.format(path, self.cfg.DATASET.NAME, self.cfg.MODEL.BACKBONE.NAME.replace(
                                                                          "/",
                                                                          "_"))
         if os.path.isfile(pkl_path):
@@ -492,10 +491,8 @@ class SimpleTrainer(TrainerBase):
         del surrogate
         torch.cuda.empty_cache()
 
-    def before_adv_test(self, attack='PGD'):
-        pkl_path = '/share/test/user/share1/test/{}_{}_{}.pkl'.format(self.cfg.DATASET.NAME,
-                                                                              self.cfg.MODEL.BACKBONE.NAME.replace("/",
-                                                                                                                   "_"),
+    def before_adv_test(self, path, attack='PGD'):
+        pkl_path = '{}/{}_{}_{}.pkl'.format(path, self.cfg.DATASET.NAME, self.cfg.MODEL.BACKBONE.NAME.replace("/", "_"),
                                                                               attack)
         mean_value, std_value = [0.48145466, 0.4578275, 0.40821073], [0.26862954, 0.26130258, 0.27577711]
         mean = torch.tensor(mean_value).view(-1, 1, 1).to(self.device)
@@ -520,8 +517,7 @@ class SimpleTrainer(TrainerBase):
                 assert torch.max(images_adv - inputs) < (test_eps / 255. + 1e-6)
                 assert torch.min(images_adv - inputs) > (-test_eps / 255 - 1e-6)
                 images_adv = normalize(images_adv)
-                self.test_pkl[batch_idx * self.test_loader.batch_size: (
-                                                                                   batch_idx + 1) * self.test_loader.batch_size] = images_adv.cpu()
+                self.test_pkl[batch_idx * self.test_loader.batch_size: (batch_idx + 1) * self.test_loader.batch_size] = images_adv.cpu()
             torch.save(self.test_pkl, pkl_path)
             del surrogate
 
@@ -529,9 +525,8 @@ class SimpleTrainer(TrainerBase):
             raise NameError
         torch.cuda.empty_cache()
 
-    def before_black_test(self, attack='RAP'):
-        pkl_path = '/share/test/user/share1/test/{}_{}.pkl'.format(self.cfg.DATASET.NAME,
-                                                                           attack)
+    def before_black_test(self, path, attack='RAP'):
+        pkl_path = '{}/{}_{}.pkl'.format(path, self.cfg.DATASET.NAME, attack)
         mean_value, std_value = [0.48145466, 0.4578275, 0.40821073], [0.26862954, 0.26130258, 0.27577711]
         mean = torch.tensor(mean_value).view(-1, 1, 1)
         std = torch.tensor(std_value).view(-1, 1, 1)
@@ -556,22 +551,6 @@ class SimpleTrainer(TrainerBase):
 
     def after_train(self):
         print("Finish training")
-
-        # do_test = not self.cfg.TEST.NO_TEST
-        # if do_test:
-        #     if self.cfg.TEST.FINAL_MODEL == "best_val":
-        #         print("Deploy the model with the best val performance")
-        #         self.load_model(self.output_dir)
-        #     else:
-        #         print("Deploy the last-epoch model")
-        #     self.test()
-
-        # Show elapsed time
-        # elapsed = round(time.time() - self.time_start)
-        # elapsed = str(datetime.timedelta(seconds=elapsed))
-        # print(f"Elapsed: {elapsed}")
-
-        # Close writer
         self.close_writer()
 
     def after_epoch(self):

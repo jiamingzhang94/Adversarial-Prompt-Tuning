@@ -128,6 +128,8 @@ def main(args):
     if torch.cuda.is_available() and cfg.USE_CUDA:
         torch.backends.cudnn.benchmark = True
 
+    if not os.path.exists(args.path):
+        os.makedirs(args.path)
     # print_args(args, cfg)
     # print("Collecting env info ...")
     # print("** System info **\n{}\n".format(collect_env_info()))
@@ -142,7 +144,7 @@ def main(args):
         trainer.test()
         print('---------------------------------------------------')
         print('robust acc:')
-        trainer.before_adv_test()
+        trainer.before_adv_test(path, args.white_attack)
         trainer.test_adv()
         return
 
@@ -154,7 +156,7 @@ def main(args):
         trainer.test()
         print('---------------------------------------------------')
         print('robust acc:')
-        trainer.before_black_test(args.black_attack)
+        trainer.before_black_test(args.path, args.black_attack)
         trainer.test_adv()
         return
 
@@ -170,7 +172,7 @@ def main(args):
         trainer.test()
         print('---------------------------------------------------')
         print('robust acc:')
-        trainer.before_adv_test()
+        trainer.before_adv_test(path, args.white_attack)
         trainer.test_adv()
 
 
@@ -201,6 +203,8 @@ if __name__ == "__main__":
     parser.add_argument("--eval-only", action="store_true", help="evaluation only")
     parser.add_argument("--eval-black", action="store_true", help="evaluation black-box attack")
     parser.add_argument("--black-attack", type=str, default="RAP")
+    parser.add_argument("--white-attack", type=str, default="PGD")
+    parser.add_argument("--path", type=str, default="./pkl_data/", help="directory of pkl")
     parser.add_argument(
         "--model-dir",
         type=str,
