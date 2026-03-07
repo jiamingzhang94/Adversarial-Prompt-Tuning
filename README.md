@@ -2,7 +2,7 @@
 
 > **🎉 [2026.03] News:** Our extended journal version **"NAP-Tuning: Neural Augmented Prompt Tuning for Adversarially Robust Vision-Language Models"** has been accepted by **IEEE TPAMI 2026**! 
 > 
-> 🔥 The new repository with enhanced methods, updated code, and better performance is now available here: **[jiamingzhang94/nap-tuing](https://github.com/jiamingzhang94/nap-tuing)**.
+> 🔥 The new repository with enhanced methods, updated code, and better performance is now available here: **[nap-tuing](https://github.com/jiamingzhang94/nap-tuing)**.
 
 *Note: This repository contains the original code for our ECCV 2024 conference paper (AdvPT). For our latest extended work with stronger adversarial robustness (NAP-Tuning, TPAMI 2026), please visit the [NAP-Tuning repository](https://github.com/jiamingzhang94/nap-tuing).*
 
