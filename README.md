@@ -2,7 +2,7 @@
 
 > **🎉 [2026.03] News:** Our extended journal version **"NAP-Tuning: Neural Augmented Prompt Tuning for Adversarially Robust Vision-Language Models"** has been accepted by **IEEE TPAMI 2026**! 
 > 
-> 🔥 The new repository with enhanced methods, updated code, and better performance is now available here: **[nap-tuing](https://github.com/jiamingzhang94/nap-tuing)**.
+> 🔥 The new repository with enhanced methods, updated code, and better performance is now available here: **[NAP-Tuning](https://github.com/jiamingzhang94/nap-tuning)**.
 
 
 Welcome to the official code repository for the paper "Adversarial Prompt Tuning for Vision-Language Models". Our work introduces AdvPT, an innovative approach that leverages learnable text prompts and aligns them with adversarial image embeddings. This method aims to address the vulnerabilities inherent in Vision-Language Models (VLMs) without the necessity of extensive parameter training or modifying the existing model architecture.
